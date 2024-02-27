@@ -20,20 +20,20 @@ if (!botToken) {
 // Create a new Telegram bot instance
 const bot = new TelegramBot(botToken, { polling: true });
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  const welcomeMessage = `👋 Welcome to PositionSize Master Bot! 📈\n\n`;
-  const instructionMessage = `To get started, use the following commands:\n\n`;
-  const commandsList = [
-    '/positionsize 📊 - Calculate position size based on entry, stop loss, and risk.',
-    '/help ℹ️ - Get assistance and explore available commands.',
-    '/commands 📜 - View the list of commands at any time.',
-  ];
+// bot.onText(/\/start/, (msg) => {
+//   const chatId = msg.chat.id;
+//   const welcomeMessage = `👋 Welcome to PositionSize Master Bot! 📈\n\n`;
+//   const instructionMessage = `To get started, use the following commands:\n\n`;
+//   const commandsList = [
+//     '/positionsize 📊 - Calculate position size based on entry, stop loss, and risk.',
+//     '/help ℹ️ - Get assistance and explore available commands.',
+//     '/commands 📜 - View the list of commands at any time.',
+//   ];
 
-  const fullMessage = welcomeMessage + instructionMessage + commandsList.join('\n');
+//   const fullMessage = welcomeMessage + instructionMessage + commandsList.join('\n');
 
-  bot.sendMessage(chatId, fullMessage);
-});
+//   bot.sendMessage(chatId, fullMessage);
+// });
 
 
 // Function to calculate position size
@@ -84,10 +84,10 @@ async function handleUserInput(chatId, text) {
     userInput[chatId].positionType = priceDifference < 0 ? 'short' : 'long';
 
     // Calculate percentage distance using absolute value of price difference
-    const percentageDistanceToStopLoss = Math.abs(priceDifference / userInput[chatId].entryPrice) * 100;
-   console.log({percentageDistanceToStopLoss})
+    const distanceToStopLoss = Math.abs(priceDifference / userInput[chatId].entryPrice).toFixed(2);
+   console.log({distanceToStopLoss})
     // Perform the position size calculation directly
-    const positionSize = calculatePositionSize(userInput[chatId].riskAmount, percentageDistanceToStopLoss / 100);
+    const positionSize = calculatePositionSize(userInput[chatId].riskAmount, distanceToStopLoss);
 
     // Include entry price, stop loss, and risk amount in the response
     const responseMessage = `Entry Price: ${userInput[chatId].entryPrice}\nStop Loss: ${userInput[chatId].stopLoss}\nRisk Amount: ${userInput[chatId].riskAmount}\nPosition Type: ${userInput[chatId].positionType}\nPosition Size: ${positionSize}`;
