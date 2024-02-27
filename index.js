@@ -20,20 +20,20 @@ if (!botToken) {
 // Create a new Telegram bot instance
 const bot = new TelegramBot(botToken, { polling: true });
 
-// bot.onText(/\/start/, (msg) => {
-//   const chatId = msg.chat.id;
-//   const welcomeMessage = `👋 Welcome to PositionSize Master Bot! 📈\n\n`;
-//   const instructionMessage = `To get started, use the following commands:\n\n`;
-//   const commandsList = [
-//     '/positionsize 📊 - Calculate position size based on entry, stop loss, and risk.',
-//     '/help ℹ️ - Get assistance and explore available commands.',
-//     '/commands 📜 - View the list of commands at any time.',
-//   ];
+bot.onText(/\/start/, (msg) => {
+  const chatId = msg.chat.id;
+  const welcomeMessage = `👋 Welcome to PositionSize Master Bot! 📈\n\n`;
+  const instructionMessage = `To get started, use the following commands:\n\n`;
+  const commandsList = [
+    '/positionsize 📊 - Calculate position size based on entry, stop loss, and risk.',
+    '/help ℹ️ - Get assistance and explore available commands.',
+    '/commands 📜 - View the list of commands at any time.',
+  ];
 
-//   const fullMessage = welcomeMessage + instructionMessage + commandsList.join('\n');
+  const fullMessage = welcomeMessage + instructionMessage + commandsList.join('\n');
 
-//   bot.sendMessage(chatId, fullMessage);
-// });
+  bot.sendMessage(chatId, fullMessage);
+});
 
 
 // Function to calculate position size
