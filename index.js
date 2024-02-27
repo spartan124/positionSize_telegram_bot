@@ -1,7 +1,13 @@
 import fetch from 'node-fetch';
 import TelegramBot from 'node-telegram-bot-api';
+import Promise from 'bluebird'
 
 import dotenv from 'dotenv';
+
+Promise.config({
+  cancellation: true
+});
+
 
 dotenv.config()
 
