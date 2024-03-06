@@ -26,6 +26,9 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
+app.get(`/webhook/${botToken}`, (req, res) => {
+  res.sendStatus(200);
+});
 
 app.post(`/webhook/${botToken}`, (req, res) => {
   // const updates = req.body
