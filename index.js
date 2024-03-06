@@ -95,6 +95,10 @@ async function handleUserInput(chatId, text) {
     await bot.sendMessage(chatId, fullMessage);
   
   }
+  else if (text === '/restart') {
+    await bot.sendMessage(chatId, 'Process restarted. Enter /positionsize to start again.');
+    delete userInput[chatId];
+  }
   else if (text === "/positionsize") {
     await bot.sendMessage(chatId, "Enter entry price:");
     userInput[chatId] = { step: "entryPrice" };
@@ -147,7 +151,7 @@ async function handleUserInput(chatId, text) {
     // Calculate percentage distance using absolute value of price difference
     const distanceToStopLoss = Math.abs(
       priceDifference / userInput[chatId].entryPrice
-    ).toFixed(2);
+    ).toFixed(4);
     console.log({ distanceToStopLoss });
     // Perform the position size calculation directly
     const positionSize = calculatePositionSize(
@@ -156,7 +160,7 @@ async function handleUserInput(chatId, text) {
     );
 
     // Include entry price, stop loss, and risk amount in the response
-    const responseMessage = `Entry Price: ${userInput[chatId].entryPrice}\nStop Loss: ${userInput[chatId].stopLoss}\nRisk Amount: ${userInput[chatId].riskAmount}\nPosition Type: ${userInput[chatId].positionType}\nPosition Size: ${positionSize}`;
+    const responseMessage = `Position Type: ${userInput[chatId].positionType}\nEntry Price: ${userInput[chatId].entryPrice}\nStop Loss: ${userInput[chatId].stopLoss}\nRisk Amount: ${userInput[chatId].riskAmount}\nPosition Size: ${positionSize}`;
 
     // Send the response with type definition
     const response = {
