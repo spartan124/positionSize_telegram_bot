@@ -31,15 +31,15 @@ app.get(`/webhook/${botToken}`, (req, res) => {
 });
 
 app.post(`/webhook/${botToken}`, (req, res) => {
-  // const updates = req.body
+  const updates = req.body
 
-  // if (updates.message) {
-  //   const msg = updates.message
-  //   const chatId = msg.chat.id
-  //   const text = msg.text || ''
-  //   handleUserInput(chatId, text)
-  // }
-  bot.processUpdate(req.body);
+  if (updates.message) {
+    const msg = updates.message
+    const chatId = msg.chat.id
+    const text = msg.text || ''
+    handleUserInput(chatId, text)
+  }
+  // bot.processUpdate(req.body);
   res.sendStatus(200);
 })
 
