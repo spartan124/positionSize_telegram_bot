@@ -19,7 +19,7 @@ if (!botToken) {
 
 // Create a new Telegram bot instance
 const bot = new TelegramBot(botToken, { polling: false });
-const ngrokUrl = process.env.WEBHOOK_URL;
+const serverUrl = process.env.SERVER_URL;
 
 const app = express()
 
@@ -42,7 +42,7 @@ app.post(`/webhook/${botToken}`, (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
-  const webhookURL = `${ngrokUrl}/webhook/${botToken}`
+  const webhookURL = `${serverUrl}/webhook/${botToken}`
     if (webhookURL) {
     bot.setWebHook(webhookURL).then(() => {
       console.log(`Webhook set to ${webhookURL}`)
