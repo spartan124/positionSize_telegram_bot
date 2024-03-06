@@ -1,13 +1,7 @@
 import fetch from 'node-fetch';
 import TelegramBot from 'node-telegram-bot-api';
-import Promise from 'bluebird'
-
+import express from 'express'
 import dotenv from 'dotenv';
-
-Promise.config({
-  cancellation: true
-});
-
 
 dotenv.config()
 
@@ -24,7 +18,40 @@ if (!botToken) {
 }
 
 // Create a new Telegram bot instance
-const bot = new TelegramBot(botToken, { polling: true });
+const bot = new TelegramBot(botToken, { polling: false });
+const ngrokUrl = process.env.WEBHOOK_URL;
+
+const app = express()
+
+const PORT = process.env.PORT || 3000
+
+app.use(express.json())
+
+app.post(`/webhook/${botToken}`, (req, res) => {
+  // const updates = req.body
+
+  // if (updates.message) {
+  //   const msg = updates.message
+  //   const chatId = msg.chat.id
+  //   const text = msg.text || ''
+  //   handleUserInput(chatId, text)
+  // }
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+})
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
+  const webhookURL = `${ngrokUrl}/webhook/${botToken}`
+    if (webhookURL) {
+    bot.setWebHook(webhookURL).then(() => {
+      console.log(`Webhook set to ${webhookURL}`)
+    })
+  }
+  
+})
+
+
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
@@ -111,12 +138,6 @@ async function handleUserInput(chatId, text) {
   }
 }
 
-// Listen for incoming messages
-bot.on('message', async (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text || '';
 
-  // Handle user input and perform calculations
-  await handleUserInput(chatId, text);
-});
+
 
