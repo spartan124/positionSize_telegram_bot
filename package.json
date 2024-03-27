@@ -4,7 +4,9 @@
   "description": "Your Telegram bot for position sizing",
   "main": "index.js",
   "type": "module",
-  "bin": "index.js",
+  "bin": {
+    "position-size-master": "index.js"
+  },
   "scripts": {
     "start": "nodemon index.js",
     "build": "tsc",
