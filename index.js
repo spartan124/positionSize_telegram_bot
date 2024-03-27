@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import fetch from "node-fetch";
 import TelegramBot from "node-telegram-bot-api";
 import express from "express";

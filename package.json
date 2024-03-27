@@ -1,9 +1,10 @@
 {
-  "name": "positionSizemaster",
+  "name": "position-size-master",
   "version": "1.0.0",
   "description": "Your Telegram bot for position sizing",
   "main": "index.js",
   "type": "module",
+  "bin": "index.js",
   "scripts": {
     "start": "nodemon index.js",
     "build": "tsc",
